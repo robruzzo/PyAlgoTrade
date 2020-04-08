@@ -1,6 +1,9 @@
 '''
-This script will be employed to run all of the other scripts to calculate portfolio values and risk
-and write a report in a format to be determined. HTML?
+This script is employed to run a simple strategy on a list of tickers
+
+TODO: More documentation 
+      Exception handling for bad data
+      Get Better Data
 '''
 
 import tickerdatautil as td
@@ -10,7 +13,6 @@ import pyalgotrade.barfeed.csvfeed as csvfeed
 import pyalgotrade.bar as bar
 import pyalgotrade.stratanalyzer.returns as ret
 import pyalgotrade.stratanalyzer.sharpe as sharpe
-#import pyalgotrade.stratanalyzer.drawdown as drawdown
 import pyalgotrade.stratanalyzer.trades as trades
 from pyalgotrade.broker import backtesting
 import os
@@ -21,7 +23,7 @@ import pandas as pd
 
 
 
-#Allow for csv or pickle
+#settings for updating the ticker data
 period ="5y" #Default Initial Yahoo Finance Download Period
 delay=0.5	 #Default Delay between downloads in seconds
 data_directory='E:/Datasets/Stocks/' #Include the trailing '/'
@@ -31,6 +33,7 @@ start_date='2010-01-01'
 end_date='2017-01-01'
 interval='1d'
 
+#Update or redownload ticker data, uncomment to do so
 #Update Tickers
 #td.update_ticker_prices_fromLast(data_directory,ticker_sub_directory,fileName,delay)
 
