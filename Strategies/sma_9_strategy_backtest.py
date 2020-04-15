@@ -20,6 +20,7 @@ class MovingAverageStrategy(strategy.BacktestingStrategy):
         self.BUDGET_USE=0
         self.INITIAL_BUDGET=0
         self.printInfo=False
+        self.fastMASlope=0
         
         
     def getFastMA(self):
@@ -45,6 +46,7 @@ class MovingAverageStrategy(strategy.BacktestingStrategy):
         bar = bars[self.instrument]
         equity = self.getBroker().getCash()
         equity_use = equity*self.BUDGET_USE
+        max_risk=self.risk_percent*equity_use*.01
         #MA with period p needs p previous values ... if not available then return (for the first p-1 bars the value is NULL)
         
         if self.fastMA[-1] is None:
@@ -54,23 +56,26 @@ class MovingAverageStrategy(strategy.BacktestingStrategy):
             #When Price Action is above sma 9 buy, else sell
             if self.fastMA[-1] < bar.getPrice():
                 shares=int(equity_use//bar.getPrice())
-                max_risk=self.risk_percent*bar.getPrice()*.01
-                self.stop_loss=bar.getPrice()-max_risk
+                risk_per_share = max_risk/shares
+                self.stop_loss=bar.getPrice()-risk_per_share
                 self.fill_price=bar.getPrice()
-                #print('Shares: ',shares,' Price: ',bar.getPrice(),' Equity: $',equity)
                 self.position = self.enterLong(self.instrument,shares,True)
         
         elif self.fastMA[-1] >  bar.getPrice() or bar.getPrice()<=self.stop_loss:
             #exit the long position
             self.position.exitMarket()
             self.position = None
+        
 
     
     #when we open a long position this function is called
     def onEnterOk(self,position):
         if self.printInfo:
             trade_info = position.getEntryOrder().getExecutionInfo()
+            shares= position.getShares()
             self.info("Buy stock at $%.2f"%(trade_info.getPrice()))
+
+            
         
     #when we close the long position this function is called
     def onExitOk(self,position):
