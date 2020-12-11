@@ -24,13 +24,13 @@ import pandas as pd
 
 
 #settings for updating the ticker data
-period ="5y" #Default Initial Yahoo Finance Download Period
+period ="1y" #Default Initial Yahoo Finance Download Period
 delay=0.5	 #Default Delay between downloads in seconds
 data_directory='E:/Datasets/Stocks/' #Include the trailing '/'
 fileName ="MyWatchList.pickle" #Default File Name For updating
 ticker_sub_directory ='MyWatchList'
-start_date='2010-01-01'
-end_date='2017-01-01'
+start_date='2020-01-01'
+end_date='2020-06-29'
 interval='1d'
 
 #Update or redownload ticker data, uncomment to do so
@@ -44,7 +44,7 @@ interval='1d'
 
 
 #Set the initial portfolio size
-INITIAL_BUDGET = 10000
+INITIAL_BUDGET = 1600
 #How much of our budget will we use on this instrument for buying shares
 BUDGET_USE = 0.50
 #How Much we want to risk, to set a stop
@@ -55,7 +55,7 @@ pickle_file ='MyWatchList.pickle'
 pickle_directory ="E:\\Datasets\\stocks\\"
 tickerFile=pickle_directory+pickle_file
 data_directory='E:\\Datasets\\stocks\\MyWatchList\\'
-save_plots=False
+save_plots=True
 plot_dpi=200
 outputInfo=False
 save_results=True

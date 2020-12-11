@@ -1,1 +1,2 @@
 Ticker,Section,Error
+AMZN,Trades,<class 'ZeroDivisionError'>
